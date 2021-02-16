@@ -1,0 +1,16 @@
+name: causal-inference
+channels:
+  - defaults
+dependencies:
+  - python=3.8.5
+  - pandas=1.1.3
+  - scikit-learn=0.23.2
+  - numpy=1.18.5
+  - jupyter
+  - jupyterlab
+  - matplotlib
+  - seaborn
+  - pip
+  - pip:
+    - tqdm
+    - beautifulsoup4
