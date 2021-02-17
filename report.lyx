@@ -93,8 +93,60 @@ Ifat Peczenik
 Introduction
 \end_layout
 
+\begin_layout Standard
+Digital content consumption has grown rapidly over the years as people are
+ spending more and more time reading online content.
+ Together with the growing number of users, also the competition between
+ online media platforms has rapidly increased.
+ Online media platforms like Medium, Mashable and Buzzfeed publish hundreds
+ of articles every day, aiming to bring the best content to the users and
+ bring most shares.
+ In this project we want to analyze the effect of the week-day on which
+ an article is published on the number of shares it will get.
+ 
+\end_layout
+
 \begin_layout Section
 Data
+\end_layout
+
+\begin_layout Standard
+Our data contains around 39000 articles that were published in Mashable
+ media platform between 07/01/2013 and 27/12/2014.
+ For each article the data contains many features that could have also been
+ extracted from the article's url, for instance:
+\end_layout
+
+\begin_layout Itemize
+Publish date
+\end_layout
+
+\begin_layout Itemize
+Data channel
+\end_layout
+
+\begin_layout Itemize
+Number of images, videos, links
+\end_layout
+
+\begin_layout Itemize
+Article's length
+\end_layout
+
+\begin_layout Itemize
+Rate of positive and negative words
+\end_layout
+
+\begin_layout Itemize
+Number of shares
+\end_layout
+
+\begin_layout Itemize
+Subjectivity level
+\end_layout
+
+\begin_layout Itemize
+Max, min and average polarity of positive and negative words
 \end_layout
 
 \begin_layout Standard
