@@ -101,9 +101,20 @@ Digital content consumption has grown rapidly over the years as people are
  Online media platforms like Medium, Mashable and Buzzfeed publish hundreds
  of articles every day, aiming to bring the best content to the users and
  bring most shares.
- In this project we want to analyze the effect of the week-day on which
- an article is published on the number of shares it will get.
  
+\end_layout
+
+\begin_layout Standard
+Article's popularity can be estimated by its number of shares.
+ In this project we will try to estimate the causal effect of the week-day
+ on which an article is published on its popularity, which is measured by
+ its number of shares.
+ There are some confounders that can affect the popularity of an article
+ and we take them into account in our estimations, for example some readers
+ might not have time to read a very long article, or the title of an article
+ might be less distracting even though the article is great.
+ Many confounders are hidden, but we'll try to disable some of them where
+ it is possible.
 \end_layout
 
 \begin_layout Section
@@ -112,8 +123,12 @@ Data
 
 \begin_layout Standard
 Our data contains around 39000 articles that were published in Mashable
- media platform between 07/01/2013 and 27/12/2014.
- For each article the data contains many features that could have also been
+ between 07/01/2013 and 27/12/2014.
+ 
+\end_layout
+
+\begin_layout Standard
+For each article the data contains many features that could have also been
  extracted from the article's url, for instance:
 \end_layout
 
@@ -122,7 +137,8 @@ Publish date
 \end_layout
 
 \begin_layout Itemize
-Data channel
+Data channel: business, entertainment, social media, world, technology,
+ lifestyle
 \end_layout
 
 \begin_layout Itemize
@@ -130,7 +146,11 @@ Number of images, videos, links
 \end_layout
 
 \begin_layout Itemize
-Article's length
+Article's length: number of words in the title/content
+\end_layout
+
+\begin_layout Itemize
+Number of keywords
 \end_layout
 
 \begin_layout Itemize
@@ -138,15 +158,78 @@ Rate of positive and negative words
 \end_layout
 
 \begin_layout Itemize
+Title and content subjectivity level 
+\end_layout
+
+\begin_layout Itemize
+Max, min and average polarity of positive and negative word
+\end_layout
+
+\begin_layout Itemize
+Published week-day 
+\end_layout
+
+\begin_layout Itemize
 Number of shares
 \end_layout
 
-\begin_layout Itemize
-Subjectivity level
+\begin_layout Standard
+Some features in the dataset, like word polarity and subjectivity level,
+ are features that were calculated with some method unknown to us.
+ We take it as-is and we assume the dataset author exploited good methods
+ to calculate them.
+\end_layout
+
+\begin_layout Standard
+In addition there are some hidden confounders we need to address:
 \end_layout
 
 \begin_layout Itemize
-Max, min and average polarity of positive and negative words
+Audience - we don't know the characteristics of people that enter to the
+ website, and specifically to each of the channels in Mashable.
+\end_layout
+
+\begin_layout Itemize
+Promotion algorithms - some articles are promoted at main view of Mashable.
+ In 2013-2014 there were 3 promotion areas - 
+\begin_inset Quotes eld
+\end_inset
+
+The New Stuff
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+The Next Big Thing
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+What's Hot
+\begin_inset Quotes erd
+\end_inset
+
+.
+ We don't know which articles were promoted and how much could increase
+ the chances of an article to get shared more.
+\end_layout
+
+\begin_layout Itemize
+Advertising - some articles might had been advertised in other websites,
+ like Facebook and Google.
+\end_layout
+
+\begin_layout Itemize
+Special occasions - some articles might had been published after some special
+ occasion.
+ For example, an article about Apple that is published after Apple reveals
+ its new Iphone may get more exposure.
 \end_layout
 
 \begin_layout Standard
@@ -156,6 +239,10 @@ target "https://www.kaggle.com/srikaranelakurthy/online-news-popularity"
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 
 \end_layout
 
