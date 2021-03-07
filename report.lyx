@@ -106,9 +106,9 @@ Digital content consumption has grown rapidly over the years as people are
 
 \begin_layout Standard
 Article's popularity can be estimated by its number of shares.
- In this project we will try to estimate the causal effect of the week-day
- on which an article is published on its popularity, which is measured by
- its number of shares.
+ In this project we will try to estimate the causal effect of publishing
+ an article during weekend on its popularity, which is measured by its number
+ of shares.
  There are some confounders that can affect the popularity of an article
  and we take them into account in our estimations, for example some readers
  might not have time to read a very long article, or the title of an article
@@ -166,7 +166,7 @@ Max, min and average polarity of positive and negative word
 \end_layout
 
 \begin_layout Itemize
-Published week-day 
+Published on weekend or not 
 \end_layout
 
 \begin_layout Itemize
@@ -242,7 +242,57 @@ target "https://www.kaggle.com/srikaranelakurthy/online-news-popularity"
 
 \end_layout
 
+\begin_layout Subsection
+Data assumptions to estimate causal effect
+\end_layout
+
+\begin_layout Enumerate
+Stable unit treatment value assumption (SUTVA)- potential outcomes for any
+ unit do not vary with the treatments assigned to other units.
+ In our dataset, number of shares that one article received doesn't impact
+ number of shares that other articles are getting.
+ Moreover, for every article, there are no different forms of versions of
+ each treatment level.
+ Every article is published on weekday (treatment T=0) or weekend (treatment
+ T=1).
+\end_layout
+
+\begin_layout Enumerate
+Consistency- for a unit that receives treatment T, we observe the corresponding
+ potential outcome Yt.
+ Here we have published day for every article as well as number of shares
+ it got.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Common support (overlap)- we assume that every unit in our dataset has probabili
+ty greater than 0 to get T=0 or T=1.
+ Plot histogram of propensity scores: 
+\end_layout
+
+\begin_layout Enumerate
+Ignorability- no unmeasured confounders.
+ In other words, two observations with the same set of covariates X but
+ with different treatment assignments can be compared to estimate the causal
+ effect of the treatment for these observations.
+ Here we assume that in our dataset all hidden confounders that affect the
+ treatment have no effect on the outcome Y (number of shares), except through
+ T (published in weekday or weekend), although this assumption is unverifiable
+ from the data itself.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Correlation between features:
+\end_layout
+
 \begin_layout Standard
+\begin_inset Graphics
+	filename C:/Users/ipeczeni/OneDrive - Intel Corporation/ifat/ifat/ME/הסקה סיבתית/project/download.png
+
+\end_inset
+
 
 \end_layout
 
