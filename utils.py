@@ -52,3 +52,9 @@ def trim_common_support(data, label_name):
     treated = (data[label_name] == 1)
     
     return data[common_support]
+
+def balance_weights_for_histplot(df):
+    n = len(df['is_weekend'])
+    s = sum(df['is_weekend'])
+    weights = df['is_weekend'] * n / s + (1 - df['is_weekend'])
+    return weights
