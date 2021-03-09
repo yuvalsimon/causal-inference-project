@@ -289,11 +289,15 @@ Correlation between features:
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename https://user-images.githubusercontent.com/79163626/110288894-54b62080-7ff1-11eb-8cde-b7c176cb44a2.png
+	filename https:/raw.githubusercontent.com/yuvalsimon/causal-inference-project/main/images/corr_matrix.png
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection*
+Logistic Regression feature importance:
 \end_layout
 
 \begin_layout Section
@@ -306,6 +310,31 @@ Results
 
 \begin_layout Section
 Weaknesses
+\end_layout
+
+\begin_layout Itemize
+In our dataset there are only 5190 articles published on weekend (T=1) comparing
+ to 34000 articles from weekdays (T=0).
+ Ideally we would want to have equal number of units with T=0 and T=1, this
+ will increase confidence in our causal analysis.
+ Having more articles from weekends could potentially change our results
+ and impact final conclusions.
+ 
+\end_layout
+
+\begin_layout Itemize
+We may have hidden confounders that are impacting only outcome Y, number
+ of shares.
+ We assumed that all hidden confounders are impacting Y only through T and
+ by that our data is having ignorability.
+ However, this asssumption can't be verifiable from the data itself.
+\end_layout
+
+\begin_layout Itemize
+Original dataset contains 60 different features for every article.
+ Since we have relatively small number of records, we had to remove some
+ of those features (possible confounders).
+ 
 \end_layout
 
 \begin_layout Section
