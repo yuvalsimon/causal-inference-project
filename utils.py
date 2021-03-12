@@ -1,8 +1,14 @@
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+import holidays
 
 random_state = 101
+
+us_holidays = holidays.UnitedStates(years=[2013, 2014])
+
+def is_holiday(date):
+    return date in us_holidays
 
 def factorize(df):
     """

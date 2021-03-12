@@ -233,42 +233,35 @@ Special occasions - some articles might had been published after some special
 \end_layout
 
 \begin_layout Standard
-\begin_inset CommandInset href
-LatexCommand href
-target "https://www.kaggle.com/srikaranelakurthy/online-news-popularity"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Data assumptions to estimate causal effect
+We assume a few things on the data that will allow us to estimate the causal
+ effect:
 \end_layout
 
 \begin_layout Enumerate
-Stable unit treatment value assumption (SUTVA)- potential outcomes for any
- unit do not vary with the treatments assigned to other units.
- In our dataset, number of shares that one article received doesn't impact
- number of shares that other articles are getting.
- Moreover, for every article, there are no different forms of versions of
- each treatment level.
- Every article is published on weekday (treatment T=0) or weekend (treatment
- T=1).
+Stable unit treatment value assumption (SUTVA) - the potential outcomes
+ (number of shares) for any article do not vary significantly with the treatment
+ (whether published on weekend) assigned to the other articles.
+ It probably does vary, for example if a promoted article may have an effect
+ on the number of people reading a regular article on the day it is published.
+ We assume this variation is negligible.
+ Moreover, we assume that the treatment is binary, there is the effect of
+ the specific date at which an article was published on its number of shares
+ is neglibile.
+ There may be specifal occasions that occured on some dates but we assume
+ its effect on article's popularity is negligible.
+ We drop from our calculations articles that were published on holidays.
 \end_layout
 
 \begin_layout Enumerate
-Consistency- for a unit that receives treatment T, we observe the corresponding
- potential outcome Yt.
- Here we have published day for every article as well as number of shares
- it got.
- 
+We assume that an article's popularity is represented exactly by the number
+ of shares of the article.
+ Our data contains the number of shares of the all articles so consistency
+ holds
 \end_layout
 
 \begin_layout Enumerate
-Common support (overlap)- we assume that every unit in our dataset has probabili
-ty greater than 0 to get T=0 or T=1.
- Plot histogram of propensity scores: 
+Ignorability - we assume that the effect of the hidden confounders is negligible.
+ All the signifcant confounders are measured.
 \end_layout
 
 \begin_layout Enumerate
@@ -289,7 +282,7 @@ Correlation between features:
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename https:/raw.githubusercontent.com/yuvalsimon/causal-inference-project/main/images/corr_matrix.png
+	filename images/corr_matrix.png
 
 \end_inset
 
@@ -304,6 +297,12 @@ Logistic Regression feature importance:
 Methods
 \end_layout
 
+\begin_layout Standard
+Common support (overlap)- we assume that every unit in our dataset has probabili
+ty greater than 0 to get T=0 or T=1.
+ Plot histogram of propensity scores: 
+\end_layout
+
 \begin_layout Section
 Results
 \end_layout
@@ -313,12 +312,11 @@ Weaknesses
 \end_layout
 
 \begin_layout Itemize
-In our dataset there are only 5190 articles published on weekend (T=1) comparing
- to 34000 articles from weekdays (T=0).
- Ideally we would want to have equal number of units with T=0 and T=1, this
- will increase confidence in our causal analysis.
- Having more articles from weekends could potentially change our results
- and impact final conclusions.
+In our dataset there are only 5190 articles published on weekend.
+ We need that common support will hold, so we are very limited with the
+ number of confounders we can consider in order to calculate ATE.
+ Having more articles published on weekend could potentially change our
+ results and impact our conclusions.
  
 \end_layout
 
@@ -326,19 +324,22 @@ In our dataset there are only 5190 articles published on weekend (T=1) comparing
 We may have hidden confounders that are impacting only outcome Y, number
  of shares.
  We assumed that all hidden confounders are impacting Y only through T and
- by that our data is having ignorability.
+ by that our data is satisfying ignorability.
  However, this asssumption can't be verifiable from the data itself.
-\end_layout
-
-\begin_layout Itemize
-Original dataset contains 60 different features for every article.
- Since we have relatively small number of records, we had to remove some
- of those features (possible confounders).
- 
 \end_layout
 
 \begin_layout Section
 Discussion
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+target "https://www.kaggle.com/srikaranelakurthy/online-news-popularity"
+
+\end_inset
+
+
 \end_layout
 
 \end_body

@@ -12,5 +12,5 @@ dependencies:
   - seaborn
   - pip
   - pip:
-    - tqdm
     - beautifulsoup4
+    - holidays
