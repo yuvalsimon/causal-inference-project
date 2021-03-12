@@ -79,4 +79,4 @@ def trim_common_support(df, t_label='is_weekend', min_articles_count=15):
     min_propensity = largest_range_first_idx / 100
     max_propensity = (largest_range_first_idx + largest_range_len) / 100
     common_support = (df.propensity >= min_propensity) & (df.propensity <= max_propensity)
-    return df[common_support]
+    return df[common_support], df[common_support == False]
