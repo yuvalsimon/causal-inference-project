@@ -255,8 +255,8 @@ Stable unit treatment value assumption (SUTVA) - the potential outcomes
 \begin_layout Enumerate
 We assume that an article's popularity is represented exactly by the number
  of shares of the article.
- Our data contains the number of shares of the all articles so consistency
- holds
+ Our data contains the number of shares of all the articles so consistency
+ holds.
 \end_layout
 
 \begin_layout Enumerate
@@ -280,9 +280,36 @@ Ignorability- no unmeasured confounders.
 Correlation between features:
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsection*
 \begin_inset Graphics
 	filename images/corr_matrix.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Shares histogram:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename images/shares_hist.PNG
+	clip
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Data channel distribution:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename images/data_channel_dis.PNG
 
 \end_inset
 
@@ -294,13 +321,68 @@ Logistic Regression feature importance:
 \end_layout
 
 \begin_layout Section
-Methods
+Method
 \end_layout
 
 \begin_layout Standard
+We try to estimate average treatment effect using the following causal inference
+ methods:
+\end_layout
+
+\begin_layout Itemize
+Inverse probability weighting (IPW) with propensity scores- we use 3 different
+ methods to estimate propensity scores: logistic regression, random forest
+ and gradient boosting.
+ For each method we calculate AUROC indicator and check for common support
+ and calibration.
+ In order to achieve better common support overlapping, we used trimming
+ to remove outliers propensity scores from our model.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
 Common support (overlap)- we assume that every unit in our dataset has probabili
 ty greater than 0 to get T=0 or T=1.
  Plot histogram of propensity scores: 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Matching- for each article with confounders X and treatment T we find the
+ closest article that got treatment 1-T.
+ Optimal unit matching that we use is minimizing sum of distances between
+ all pairs.
+ After finding for each unit its match, we calculate individual treatment
+ effect (ITE) for every unit and finally calculate the ATE.
+ 
+\end_layout
+
+\begin_layout Itemize
+S learner- models Y(0) and Y(1) through one model that receives the treatment
+ assignment T as an input feature, along with the features X.
+ Here we used one linear regression model to estimate y~f(x,t).
+ Then we predict ATE on all the data.
+\end_layout
+
+\begin_layout Itemize
+T learner- models Y(0) and Y(1) separately using two different models.
+ Here we used 2 linear regression models to estimate y0~f0(x) and y1~f1(x).
+ Then we predict ATE on all the data.
+\end_layout
+
+\begin_layout Itemize
+X learner- in our dataset there are many units with T=0 (~34k samples) and
+ less with T=1 (~5k samples), therefore we chose to use X learner model
+ to overcome sample size difference.
+ Here we models Y(0) and Y(1) separately as we did in T learner, using 2
+ linear regression models to estimate y0~f0(x) and y1~f1(x).
+ Now we estimate conditional average treatment effect on the treated and
+ conditional average treatment effect on the controls using random forest
+ regressors.
+ Then we estimate CATE using weighting function- here we use propensity
+ score estimation.
+ 
 \end_layout
 
 \begin_layout Section
