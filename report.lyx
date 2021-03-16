@@ -57,10 +57,10 @@
 \shortcut idx
 \color #008000
 \end_index
-\leftmargin 3cm
+\leftmargin 4cm
 \topmargin 4cm
 \rightmargin 4cm
-\bottommargin 3cm
+\bottommargin 4cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -271,18 +271,15 @@ Ignorability - we assume that the effect of the hidden confounders is negligible
 
 \begin_layout Standard
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status open
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/data/corr_matrix.png
-	scale 25
+	scale 24
 
 \end_inset
 
@@ -491,6 +488,7 @@ Logistic regression: it had
 
 
 \begin_inset Float figure
+placement h
 wide false
 sideways false
 status open
@@ -517,7 +515,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/propensity/log_normal.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -548,7 +546,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/propensity/log_log.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -579,7 +577,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/propensity/log_calibration.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -609,7 +607,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/propensity/log_trimmed.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -652,7 +650,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/propensity/log_trimmed_log.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -697,6 +695,7 @@ Random forest: it had
 
 
 \begin_inset Float figure
+placement h
 wide false
 sideways false
 status open
@@ -719,7 +718,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/propensity/random_forest_normal.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -750,7 +749,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/propensity/random_forest_log.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -781,7 +780,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/propensity/random_forest_calibration.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -811,7 +810,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/propensity/random_forest_trimmed.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -854,7 +853,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/propensity/random_forest_trimmed_log.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -895,6 +894,7 @@ Gradient boosting: it had
 
 
 \begin_inset Float figure
+placement h
 wide false
 sideways false
 status open
@@ -917,7 +917,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/propensity/boosting_normal.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -948,7 +948,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/propensity/boosting_log.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -979,7 +979,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/propensity/boosting_calibration.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -1009,7 +1009,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/propensity/boosting_trimmed.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -1052,7 +1052,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename images/propensity/boosting_trimmed_log.png
-	scale 50
+	scale 35
 
 \end_inset
 
@@ -1109,10 +1109,6 @@ Feature importance rankings
 wide false
 sideways false
 status open
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -1323,10 +1319,6 @@ With logistic regression propensity scores
 wide false
 sideways false
 status open
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Graphics
