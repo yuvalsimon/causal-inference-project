@@ -446,7 +446,7 @@ Histogram of percentile 0.97 of shares count
 \end_layout
 
 \begin_layout Section
-Method
+Methods
 \end_layout
 
 \begin_layout Standard
@@ -1232,23 +1232,101 @@ We tried to estimate ATE using a couple of methods, together with each of
 \end_layout
 
 \begin_layout Enumerate
-Inverse probability weighting (IPW):
+Inverse probability weighting (IPW)- used propensity scores as calculated
+ above.
+ 
 \end_layout
 
 \begin_layout Enumerate
-Matching:
+Matching- optimal unit matching that we used is minimizing sum of distances
+ between all sample pairs.
+ 
 \end_layout
 
 \begin_layout Enumerate
-S learner
+S learner- used gradient boosting model to estimate 
+\begin_inset Formula $y\sim f(x,t)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Enumerate
-T learner
+T learner- used 2 gradient boosting models to estimate 
+\begin_inset Formula $y_{0}\sim f_{0}(x)$
+\end_inset
+
+ and 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $y_{1}\sim f_{1}(x)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Enumerate
-X learner
+X learner- in our dataset there are many units with T=0 (~34k samples) and
+ only ~5k samples with T=1, therefore we chose to use X learner model to
+ overcome sample size difference.
+ Here we model 
+\begin_inset Formula $Y_{0}$
+\end_inset
+
+and 
+\begin_inset Formula $Y_{1}$
+\end_inset
+
+separately using 2 gradient boosting models.
+ For CATE estimation we used propensity scores as weighting function.
+ 
+\end_layout
+
+\begin_layout Section
+Results
+\end_layout
+
+\begin_layout Standard
+Here are ATE estimations we got for every method and propensity score model
+ that was mentioned above.
+ Few observations:
+\end_layout
+
+\begin_layout Itemize
+IPW results are very different from other methods for every propensity score
+ estimation that we used.
+ However, modify propensity score method also changed IPW estimation significant
+ly.
+ When using logistic regression, IPW ATE was the closest for other method
+ values.
+ 
+\end_layout
+
+\begin_layout Itemize
+Different propensity score methods and trimming have low impact on matching,
+ S learner, T learner and X learner results.
+ 
+\end_layout
+
+\begin_layout Itemize
+Highest ATE value is always estimated by matching method.
+ 
+\end_layout
+
+\begin_layout Itemize
+R2 score achieved is ~ -0.1, relatively low.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1392,66 +1470,6 @@ With boosting propensity scores
 
 \end_layout
 
-\begin_layout Itemize
-Inverse probability weighting (IPW) with propensity scores- we use 3 different
- methods to estimate propensity scores: logistic regression, random forest
- and gradient boosting.
- For each method we calculate AUROC indicator and check for common support
- and calibration.
- In order to achieve better common support overlapping, we used trimming
- to remove outliers propensity scores from our model.
- 
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Common support (overlap)- we assume that every unit in our dataset has probabili
-ty greater than 0 to get T=0 or T=1.
- Plot histogram of propensity scores: 
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Matching- for each article with confounders X and treatment T we find the
- closest article that got treatment 1-T.
- Optimal unit matching that we use is minimizing sum of distances between
- all pairs.
- After finding for each unit its match, we calculate individual treatment
- effect (ITE) for every unit and finally calculate the ATE.
- 
-\end_layout
-
-\begin_layout Itemize
-S learner- models Y(0) and Y(1) through one model that receives the treatment
- assignment T as an input feature, along with the features X.
- Here we used one linear regression model to estimate y~f(x,t).
- Then we predict ATE on all the data.
-\end_layout
-
-\begin_layout Itemize
-T learner- models Y(0) and Y(1) separately using two different models.
- Here we used 2 linear regression models to estimate y0~f0(x) and y1~f1(x).
- Then we predict ATE on all the data.
-\end_layout
-
-\begin_layout Itemize
-X learner- in our dataset there are many units with T=0 (~34k samples) and
- less with T=1 (~5k samples), therefore we chose to use X learner model
- to overcome sample size difference.
- Here we models Y(0) and Y(1) separately as we did in T learner, using 2
- linear regression models to estimate y0~f0(x) and y1~f1(x).
- Now we estimate conditional average treatment effect on the treated and
- conditional average treatment effect on the controls using random forest
- regressors.
- Then we estimate CATE using weighting function- here we use propensity
- score estimation.
- 
-\end_layout
-
-\begin_layout Section
-Results
-\end_layout
-
 \begin_layout Section
 Weaknesses
 \end_layout
@@ -1475,6 +1493,13 @@ We may have hidden confounders that are impacting only outcome Y, number
 
 \begin_layout Section
 Discussion
+\end_layout
+
+\begin_layout Standard
+Based on the results we got, it seems that overall articles published in
+ weekend are getting more shares.
+ According to ATE estimation range, articles published in weekend can get
+ 180-750 more shares comparing to week day.
 \end_layout
 
 \begin_layout Standard
