@@ -29,7 +29,6 @@ def matching_ate(df, t_col='is_weekend', y_col='shares'):
 
 def s_learner_ate(df, t_col='is_weekend', y_col='shares', **kwargs):
     xt = df.drop([y_col], axis=1)
-    x1 = xt[xt[t_col]==1]
     y = df[y_col]
     
     f_x_t = GradientBoostingRegressor(**kwargs).fit(xt, y)
@@ -50,9 +49,6 @@ def t_learner_ate(df, t_col='is_weekend', y_col='shares', **kwargs):
     
     f_x_0 = GradientBoostingRegressor(**kwargs).fit(x0, y0)
     f_x_1 = GradientBoostingRegressor(**kwargs).fit(x1, y1)
-    
-    print(f_x_0.score(x0, y0))
-    print(f_x_1.score(x1, y1))
     
     return (f_x_1.predict(x) - f_x_0.predict(x)).mean()
 

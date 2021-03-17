@@ -82,7 +82,7 @@
 \begin_body
 
 \begin_layout Title
-Online Article's Popularity
+Digital Articles Popularity
 \end_layout
 
 \begin_layout Author
@@ -91,6 +91,19 @@ Yuval Simon
 \end_inset
 
 Ifat Peczenik
+\end_layout
+
+\begin_layout Date
+
+\size small
+\begin_inset CommandInset href
+LatexCommand href
+target "https://github.com/yuvalsimon/causal-inference-project"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -126,8 +139,24 @@ Data
 \end_layout
 
 \begin_layout Standard
-Our data contains around 39000 articles that were published in Mashable
- between 07/01/2013 and 27/12/2014.
+Our data
+\begin_inset Foot
+status open
+
+\begin_layout Author
+\begin_inset CommandInset href
+LatexCommand href
+target "https://www.kaggle.com/srikaranelakurthy/online-news-popularity"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ contains around 39000 articles that were published in Mashable between
+ 07/01/2013 and 27/12/2014.
  
 \end_layout
 
@@ -689,7 +718,7 @@ Random forest: it had
  In order to prevent overfitting we set hypermeters max tree depth to 7
  and minimum leaf samples to 40.
  The calibration curve is worse than the other methods.
- 
+ (Figure 4)
 \begin_inset Newline newline
 \end_inset
 
@@ -888,7 +917,8 @@ Gradient boosting: it had
  In order to prevent overfitting we set maximum tree depth to 3, minimum
  leaf samples to 30 and number of estimators to 100 .
  The calibration curve is quite good.
- It turns bad in the areas with less samples, but we trim these areas
+ It turns bad in the areas with less samples, but we trim these areas.
+ (Figure 5)
 \begin_inset Newline newline
 \end_inset
 
@@ -1222,29 +1252,59 @@ Gradient boosting model
 \end_layout
 
 \begin_layout Subsubsection*
+Common support trimming
+\end_layout
+
+\begin_layout Standard
+Our trimming method looked for the largest consecutive area in the propensity
+ scores histogram, such that the sample count in each bin is higher than
+ 15 for both treatment types.
+ With all the propensity estimation methods about 800 samples were eliminated.
+ Random forest and boosting methods had about 400 common eliminated samples,
+ while logistic regression propensity and either boosting or random forest
+ propensity had only about 80 common eliminated samples.
+ 
+\end_layout
+
+\begin_layout Standard
+We can see in the trimmed graphs that most of the trimmed data under logistic
+ regression propensity and random forest propensity has scores between 0.3
+ and 0.5.
+ It means in these cases that the trimmed articles' more important features
+ should be at or close to the intersection of the histograms of these features
+ grouped by 
+\begin_inset Formula $T$
+\end_inset
+
+.
+ That is, it's harder to tell based on the article's more important features
+ whether it was published on weekend or during the week.
+ The larger intersection between the eliminated samples of random forest
+ and boosting can be explained in that both have almost the same features'
+ importance ranking.
+\end_layout
+
+\begin_layout Subsubsection*
 ATE estimation
 \end_layout
 
 \begin_layout Standard
-We tried to estimate ATE using a couple of methods, together with each of
- the above propensity methods.
+We estimated ATE using a couple of methods, together with each of the above
+ propensity methods.
  
 \end_layout
 
 \begin_layout Enumerate
-Inverse probability weighting (IPW)- used propensity scores as calculated
- above.
+Inverse probability weighting (IPW)
+\end_layout
+
+\begin_layout Enumerate
+Matching - we used oclidean distance as the distance metric in the algorithm.
  
 \end_layout
 
 \begin_layout Enumerate
-Matching- optimal unit matching that we used is minimizing sum of distances
- between all sample pairs.
- 
-\end_layout
-
-\begin_layout Enumerate
-S learner- used gradient boosting model to estimate 
+S learner - we used gradient boosting model to estimate 
 \begin_inset Formula $y\sim f(x,t)$
 \end_inset
 
@@ -1252,7 +1312,7 @@ S learner- used gradient boosting model to estimate
 \end_layout
 
 \begin_layout Enumerate
-T learner- used 2 gradient boosting models to estimate 
+T learner - we used 2 gradient boosting models to estimate 
 \begin_inset Formula $y_{0}\sim f_{0}(x)$
 \end_inset
 
@@ -1277,14 +1337,21 @@ T learner- used 2 gradient boosting models to estimate
 \end_layout
 
 \begin_layout Enumerate
-X learner- in our dataset there are many units with T=0 (~34k samples) and
- only ~5k samples with T=1, therefore we chose to use X learner model to
- overcome sample size difference.
- Here we model 
+X learner - in our dataset there are many units with 
+\begin_inset Formula $T=0$
+\end_inset
+
+ (~34k samples) and only ~5k samples with 
+\begin_inset Formula $T=1$
+\end_inset
+
+, and X learner is good at such cases of treated and control data size differenc
+e.
+ We model 
 \begin_inset Formula $Y_{0}$
 \end_inset
 
-and 
+ and 
 \begin_inset Formula $Y_{1}$
 \end_inset
 
@@ -1298,14 +1365,14 @@ Results
 \end_layout
 
 \begin_layout Standard
-Here are ATE estimations we got for every method and propensity score model
- that was mentioned above.
+The ATE estimates we got for every method and propensity score model are
+ given in Figure 7.
  Few observations:
 \end_layout
 
 \begin_layout Itemize
-IPW results are very different from other methods for every propensity score
- estimation that we used.
+IPW results are lower than the other methods under all the propensity methods
+ we tried.
  However, modify propensity score method also changed IPW estimation significant
 ly.
  When using logistic regression, IPW ATE was the closest for other method
@@ -1314,19 +1381,64 @@ ly.
 \end_layout
 
 \begin_layout Itemize
-Different propensity score methods and trimming have low impact on matching,
- S learner, T learner and X learner results.
+Changing propensity score method had low impact on Matching, S learner,
+ T learner and X learner results.
+ However, the propensity affects the 3 first methods only thourgh common
+ support trimming, while on the latter it affects also through the ATE estimatio
+n method.
  
 \end_layout
 
 \begin_layout Itemize
-Highest ATE value is always estimated by matching method.
+Highest ATE value is always estimated by Matching method.
  
 \end_layout
 
 \begin_layout Itemize
-R2 score achieved is ~ -0.1, relatively low.
+When training the learner models on a train set (75% of the data), we achieved
  
+\begin_inset Formula $R^{2}$
+\end_inset
+
+ score of about 
+\begin_inset Formula $-0.05$
+\end_inset
+
+ on the test set, which is relatively low.
+ On the train set, S learner achieved score around 
+\begin_inset Formula $0.35$
+\end_inset
+
+ (
+\begin_inset Formula $y\sim f(x,t)$
+\end_inset
+
+) while T learner and X learner achieved 0.34 for 
+\begin_inset Formula $y_{0}\sim f_{0}(x)$
+\end_inset
+
+ and 
+\begin_inset Formula $0.61$
+\end_inset
+
+ for 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $y_{1}\sim f_{1}(x)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -1476,19 +1588,23 @@ Weaknesses
 
 \begin_layout Itemize
 In our dataset there are only 5190 articles published on weekend.
- We need that common support will hold, so we are very limited with the
- number of confounders we can consider in order to calculate ATE.
+ We need that common support will hold, so we are limited with the number
+ of confounders we can consider in order to calculate ATE.
  Having more articles published on weekend could potentially change our
  results and impact our conclusions.
  
 \end_layout
 
 \begin_layout Itemize
-We may have hidden confounders that are impacting only outcome Y, number
- of shares.
- We assumed that all hidden confounders are impacting Y only through T and
- by that our data is satisfying ignorability.
- However, this asssumption can't be verifiable from the data itself.
+We may have hidden confounders that their impact on the number of shares
+ is not negligible.
+\end_layout
+
+\begin_layout Itemize
+The dataset contains features that ought to be calculated from the articles'
+ text in a method unknown to us, for example article's subjectivity level,
+ sentiment polarity.
+ We had to assume that these features well represent the articles' text.
 \end_layout
 
 \begin_layout Section
@@ -1496,20 +1612,21 @@ Discussion
 \end_layout
 
 \begin_layout Standard
-Based on the results we got, it seems that overall articles published in
- weekend are getting more shares.
- According to ATE estimation range, articles published in weekend can get
+Based on the results we got, articles published on weekend are getting more
+ shares which indicates that they are more popular.
+ According to ATE estimation range, articles published on weekend can get
  180-750 more shares comparing to week day.
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset href
-LatexCommand href
-target "https://www.kaggle.com/srikaranelakurthy/online-news-popularity"
-
-\end_inset
-
-
+ This is a significant amount of potential shares considering the fact that
+ the median shares value in our dataset is 1400 and that the mean shares
+ value is 3392.
+ However, the hidden confounders might have a more signifcant effect on
+ the number of shares.
+ We believe that one signifcant hidden confounder is the article promotion
+ algorithm in Mashable.
+ Since the company knows its algorithm, it could shed more light on the
+ signifcance of this confounder if they were conducting the data collection
+ and the causal effect analysis.
+ 
 \end_layout
 
 \end_body
