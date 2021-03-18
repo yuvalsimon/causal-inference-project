@@ -733,7 +733,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Logistic regression propensity
+Random forest propensity
 \end_layout
 
 \end_inset
@@ -933,7 +933,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Logistic regression propensity
+Boosting propensity
 \end_layout
 
 \end_inset
